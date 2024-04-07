@@ -1,0 +1,103 @@
+
+html {
+    min-height: 100%;
+}
+
+
+body {
+    background-color: var(--body_bg);
+    font-family: Helvetica, Arial, sans-serif;
+    background: var(--body_grad);
+    min-height: 100%;
+}
+
+body::before {
+  clear: both;
+  content: "";
+  display: table;
+  margin-top: 0px;
+  height: 0;
+}
+
+.card {
+    position: relative;
+    background-color: var(--card-color);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    overflow-x: hidden;
+    border-radius: 20px;
+    text-align: center;
+}
+
+@media (max-width:500px) {
+    .card {max-width: calc(100% - 20px);}
+}
+
+.card h1 {
+    color:var(--card-h1);
+    font-size: 2em;
+}
+
+.card p {
+    color: var(--card-p);
+    font-size: 1.2em;
+}
+
+.card a {
+    color: var(--card-a);
+}
+
+
+/* PROFILE */
+
+.profile {
+    margin: 0 auto;
+    /* border: 5px solid #50597b; */
+    border: 3px solid #fff;
+    max-width: 12em;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.profile img {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+
+/* QR CODE */
+.qrcode {
+    max-width: 10rem;
+    margin: auto;
+}
+
+/* Links */
+
+.links {
+    /*display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px auto 10px;
+    */
+    font-size: 1em;
+    line-height: 1.5em;
+    margin-top: 1.2rem;
+}
+
+.links a.contact-link {
+    text-decoration: none;
+    text-align: center;
+}
+
+.links .contact-link:hover{
+    color: var(--card-a-hover);
+}
+
+.links > div {
+    margin: 0 auto 20px auto;
+}
+
+
