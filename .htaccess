@@ -1,12 +1,19 @@
 # Uncomment the following to prevent the httpoxy vulnerability
 # See: https://httpoxy.org/
-#<IfModule mod_headers.c>
-#    RequestHeader unset Proxy
-#</IfModule>
+<IfModule mod_headers.c>
+    RequestHeader unset Proxy
+</IfModule>
 
 <IfModule mod_rewrite.c>
     RewriteEngine on
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-SSL} !on
+    RewriteCond %{HTTP_HOST} ^tarjetapersonal\.co$ [OR]
+    RewriteCond %{HTTP_HOST} ^www\.tarjetapersonal\.co$
+    RewriteRule ^/?$ "https\:\/\/tarjetapersonal\.co\/" [R=301,L]
     RewriteRule    ^(\.well-known/.*)$ $1 [L]
     RewriteRule    ^$    webroot/    [L]
     RewriteRule    (.*) webroot/$1    [L]
 </IfModule>
+
+
