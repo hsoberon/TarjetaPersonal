@@ -98,6 +98,7 @@ body::before {
 
 .links > div {
     margin: 0 auto 20px auto;
+    padding: 0 10px;
 }
 
 
