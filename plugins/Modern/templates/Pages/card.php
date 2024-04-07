@@ -6,8 +6,8 @@
     </div>
     <div class="qrcode my-4">
         <?= $this->Html->image(
-            // 'https://quickchart.io/qr?text='.'http://tarjetapersonal.co/'.$card->url,
-            'https://quickchart.io/qr?text=https%3A%2F%2Ftarjetapersonal.co%2Fhernan-soberon&ecLevel=H&margin=2&size=300&format=svg',
+            'https://quickchart.io/qr?text='.'https://tarjetapersonal.co/'.$card->url.'&ecLevel=H&margin=2&size=300&format=svg',
+            // 'https://quickchart.io/qr?text=https%3A%2F%2Ftarjetapersonal.co%2Fhernan-soberon&ecLevel=H&margin=2&size=300&format=svg',
             ['class' => 'img-fluid', 'alt' => 'QR code']); ?>
     </div>
     <h1><?= $card->name; ?></h1>
