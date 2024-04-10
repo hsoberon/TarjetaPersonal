@@ -1,4 +1,6 @@
 <?php $this->assign('title', $card->name); ?>
+<?php $this->assign('profile', $this->Url->image($card->image)); ?>
+<?php $this->assign('description', $card->description); ?>
 
 <div class="card">
     <div class="profile">
