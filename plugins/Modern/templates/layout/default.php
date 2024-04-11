@@ -29,8 +29,8 @@
     <meta property="og:image" content="<?= $this->fetch('profile') ?>"/>
     <meta property="og:title" content="<?= $this->fetch('title') ?>"/>
     <meta property="og:description" content="<?= $this->fetch('description') ?>"/>
-    <meta property="og:image:width" content="144"/>
-    <meta property="og:image:height" content="144"/>
+    <meta property="og:image:width" content="400"/>
+    <meta property="og:image:height" content="400"/>
     
 
     <?= $this->Html->css('bootstrap.min', ['plugin' => false]); ?>
