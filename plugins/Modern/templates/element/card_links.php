@@ -60,6 +60,42 @@
                     </a>    
                 </div>"; 
                 break;
+
+            case 6:
+                // Tiktok
+                $tiktok = $link->url;
+                echo "<div class=''>
+                    <a  class='contact-link' href='{$tiktok}'
+                                    target='_blank' rel='nofolow'>
+                        {$link->link_type->icon}<br>
+                        {$link->link_type->title}
+                    </a>    
+                </div>"; 
+                break;
+
+            case 9:
+                // Linkedin
+                $Linkedin = $link->url;
+                echo "<div class=''>
+                    <a  class='contact-link' href='{$Linkedin}'
+                                    target='_blank' rel='nofolow'>
+                        {$link->link_type->icon}<br>
+                        {$link->link_type->title}
+                    </a>    
+                </div>"; 
+                break;
+
+            case 10:
+                // Behance
+                $Behance = $link->url;
+                echo "<div class=''>
+                    <a  class='contact-link' href='{$Behance}'
+                                    target='_blank' rel='nofolow'>
+                        {$link->link_type->icon}<br>
+                        {$link->link_type->title}
+                    </a>    
+                </div>"; 
+                break;
             
             default:
                 // General link
