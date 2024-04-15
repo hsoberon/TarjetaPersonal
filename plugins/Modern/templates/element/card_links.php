@@ -96,6 +96,18 @@
                     </a>    
                 </div>"; 
                 break;
+
+            case 11:
+                // location
+                $location = $link->url;
+                echo "<div class=''>
+                    <a  class='contact-link' href='{$location}'
+                                    target='_blank' rel='nofolow'>
+                        {$link->link_type->icon}<br>
+                        {$link->title}
+                    </a>    
+                </div>"; 
+                break;
             
             default:
                 // General link
