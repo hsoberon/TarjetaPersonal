@@ -10,7 +10,7 @@
                 echo "<div class=''>
                     <a  class='contact-link' href='tel:{$phone}'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -21,7 +21,7 @@
                 echo "<div class=''>
                     <a  class='contact-link' href='mailto:{$email}'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -33,7 +33,7 @@
                     <a  class='contact-link' href='https://wa.me/{$whatsapp}'
                     target='_blank' rel='nofolow'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -44,7 +44,7 @@
                 echo "<div class=''>
                     <a  class='contact-link' href='{$vcard}'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -56,7 +56,7 @@
                     <a  class='contact-link' href='{$instagram}'
                                     target='_blank' rel='nofolow'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -68,7 +68,7 @@
                     <a  class='contact-link' href='{$tiktok}'
                                     target='_blank' rel='nofolow'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -80,7 +80,7 @@
                     <a  class='contact-link' href='{$Linkedin}'
                                     target='_blank' rel='nofolow'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -92,7 +92,7 @@
                     <a  class='contact-link' href='{$Behance}'
                                     target='_blank' rel='nofolow'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -104,7 +104,7 @@
                     <a  class='contact-link' href='{$location}'
                                     target='_blank' rel='nofolow'>
                         {$link->link_type->icon}<br>
-                        {$link->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
@@ -116,7 +116,7 @@
                     <a  class='contact-link' href='{$other}'
                             target='_blank' rel='nofolow'>
                         {$link->link_type->icon}<br>
-                        {$link->link_type->title}
+                        {$link->title} 
                     </a>    
                 </div>"; 
                 break;
