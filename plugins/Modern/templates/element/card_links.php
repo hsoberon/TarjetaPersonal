@@ -28,7 +28,7 @@
 
             case 3:
                 // whatsapp
-                $whatsapp = $link->content;
+                $whatsapp = ($link->url !== '') ? $link->content . '?' . $link->url : $link->content;
                 echo "<div class=''>
                     <a  class='contact-link' href='https://wa.me/{$whatsapp}'
                     target='_blank' rel='nofolow'>
