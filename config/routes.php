@@ -49,63 +49,37 @@ return function (RouteBuilder $routes): void {
      */
     $routes->setRouteClass(DashedRoute::class);
 
-    $routes->scope('/', function (RouteBuilder $builder): void {
-        /*
-         * Here, we are connecting '/' (base path) to a controller called 'Pages',
-         * its action called 'display', and we pass a param to select the view file
-         * to use (in this case, templates/Pages/home.php)...
-         */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'home']);
+    $routes->scope('/admin', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Admin', 'action' => 'index']);
+        $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+        $builder->connect('/cards', ['controller' => 'Admin', 'action' => 'cards']);
+        $builder->connect('/cards/add', ['controller' => 'Admin', 'action' => 'addCard']);
+        $builder->connect('/cards/edit/{id}', ['controller' => 'Admin', 'action' => 'editCard'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $builder->connect('/cards/delete/{id}', ['controller' => 'Admin', 'action' => 'deleteCard'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $builder->connect('/cards/delete-link/{id}', ['controller' => 'Admin', 'action' => 'deleteLink'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+    });
 
-        $builder->connect('/{url}', ['controller' => 'Pages', 'action' => 'card'])
-        ->setPass(['url']);
-
-        /*
-         * ...and connect the rest of 'Pages' controller's URLs.
-         */
-        // $builder->connect('/pages/*', 'Pages::display');
-
-        /*
-         * Connect catchall routes for all controllers.
-         *
-         * The `fallbacks` method is a shortcut for
-         *
-         * ```
-         * $builder->connect('/{controller}', ['action' => 'index']);
-         * $builder->connect('/{controller}/{action}/*', []);
-         * ```
-         *
-         * You can remove these routes once you've connected the
-         * routes you want in your application.
-         */
+    $routes->scope('/clients', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
         $builder->fallbacks();
     });
 
-    /*
-     * If you need a different set of middleware or none at all,
-     * open new scope and define routes there.
-     *
-     * ```
-     * $routes->scope('/api', function (RouteBuilder $builder): void {
-     *     // No $builder->applyMiddleware() here.
-     *
-     *     // Parse specified extensions from URLs
-     *     // $builder->setExtensions(['json', 'xml']);
-     *
-     *     // Connect API actions here.
-     * });
-     * ```
-     */
-    $routes->scope('/clients', function (RouteBuilder $builder): void {
-          // No $builder->applyMiddleware() here.
-     
-          // Parse specified extensions from URLs
-          // $builder->setExtensions(['json', 'xml']);
-     
-          // Connect API actions here.
+    $routes->scope('/', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Pages', 'action' => 'home']);
+        $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
-          $builder->connect('/', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/{url}', ['controller' => 'Pages', 'action' => 'card'])
+            ->setPass(['url']);
 
-          $builder->fallbacks();
-      });
+        $builder->fallbacks();
+    });
 };

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Routing\Router;
+
 /**
  * Users Controller
  *
@@ -24,32 +26,53 @@ class UsersController extends AppController
 
     public function login()
     {
-        $this->request->allowMethod(['get', 'post']);
+        $this->viewBuilder()->setLayout('admin');
+        $this->set('isLoginPage', true);
+        $this->request->allowMethod(['get', 'post', 'head']);
         $result = $this->Authentication->getResult();
-        // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {
-            // redirect to /articles after login success
-            $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Pages',
-                'action' => 'home',
-            ]);
+            $this->rehashPasswordIfNeeded();
 
-            return $this->redirect($redirect);
+            return $this->redirect($this->loginRedirectUrl());
         }
-        // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Invalid username or password'));
+            $this->Flash->error('Usuario o contraseña inválidos.');
         }
     }
-
 
     public function logout()
     {
         $result = $this->Authentication->getResult();
-        // regardless of POST or GET, redirect if user is logged in
         if ($result && $result->isValid()) {
             $this->Authentication->logout();
-            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
+
+        return $this->redirect(Router::url('/admin/login'));
+    }
+
+    private function loginRedirectUrl(): string|array
+    {
+        $redirect = $this->request->getQuery('redirect');
+        if (!is_string($redirect) || $redirect === '' || preg_match('#^(https?:)?//#i', $redirect)) {
+            return ['controller' => 'Admin', 'action' => 'index'];
+        }
+
+        return Router::url($redirect);
+    }
+
+    private function rehashPasswordIfNeeded(): void
+    {
+        $identity = $this->Authentication->getIdentity();
+        $password = (string)$this->request->getData('password');
+        if (!$identity || $password === '') {
+            return;
+        }
+
+        $user = $this->Users->get($identity->getIdentifier());
+        $hasher = new \Authentication\PasswordHasher\DefaultPasswordHasher();
+        if ($hasher->needsRehash((string)$user->get('password'))) {
+            $user->password = $password;
+            $this->Users->save($user);
         }
     }
 
@@ -90,7 +113,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user = $this->Users->patchEntity($user, $this->userFormData());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -113,7 +136,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user = $this->Users->patchEntity($user, $this->userFormData());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -143,5 +166,15 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    private function userFormData(): array
+    {
+        $data = $this->request->getData();
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        return $data;
     }
 }

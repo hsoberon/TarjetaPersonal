@@ -117,7 +117,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => Router::url('/clients'),
+            'unauthenticatedRedirect' => Router::url('/admin/login'),
             'queryParam' => 'redirect',
         ]);
 
@@ -126,6 +126,18 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             'fields' => [
                 'username' => 'username',
                 'password' => 'password',
+            ],
+            'resolver' => [
+                'className' => 'Authentication.Orm',
+                'userModel' => 'Users',
+                'finder' => 'auth',
+            ],
+            'passwordHasher' => [
+                'className' => 'Authentication.Fallback',
+                'hashers' => [
+                    'Authentication.Default',
+                    'Plain',
+                ],
             ],
         ]);
 
@@ -137,7 +149,11 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'username' => 'username',
                 'password' => 'password',
             ],
-            'loginUrl' => Router::url('/clients'),
+            'loginUrl' => [
+                Router::url('/admin/login'),
+                Router::url('/clients'),
+                Router::url('/login'),
+            ],
         ]);
 
         return $authenticationService;

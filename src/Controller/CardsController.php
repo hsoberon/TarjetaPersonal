@@ -17,11 +17,7 @@ class CardsController extends AppController
      */
     public function index()
     {
-        $query = $this->Cards->find()
-            ->contain(['Themes', 'Users']);
-        $cards = $this->paginate($query);
-
-        $this->set(compact('cards'));
+        return $this->redirect(['controller' => 'Admin', 'action' => 'cards']);
     }
 
     /**
@@ -33,8 +29,7 @@ class CardsController extends AppController
      */
     public function view($id = null)
     {
-        $card = $this->Cards->get($id, contain: ['Themes', 'Users']);
-        $this->set(compact('card'));
+        return $this->redirect(['controller' => 'Admin', 'action' => 'editCard', $id]);
     }
 
     /**
@@ -100,6 +95,6 @@ class CardsController extends AppController
             $this->Flash->error(__('The card could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'Admin', 'action' => 'cards']);
     }
 }

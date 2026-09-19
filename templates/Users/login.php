@@ -1,14 +1,19 @@
-<div class="users form">
-    <?= $this->Flash->render() ?>
-    <h3>Login</h3>
-    <?= $this->Form->create() ?>
-    <fieldset>
-        <legend><?= __('Please enter your username and password') ?></legend>
-        <?= $this->Form->control('username', ['required' => true]) ?>
-        <?= $this->Form->control('password', ['required' => true]) ?>
-    </fieldset>
-    <?= $this->Form->submit(__('Login')); ?>
+<?php
+$this->assign('title', 'Iniciar sesión');
+?>
+<div class="login-card admin-form">
+    <h2>Panel de administración</h2>
+    <p class="lead">Ingresa para gestionar tus tarjetas y ver las visitas.</p>
+    <?= $this->Form->create(null, ['class' => 'admin-form']) ?>
+        <?= $this->Form->control('username', [
+            'required' => true,
+            'label' => 'Usuario',
+            'placeholder' => 'usuario',
+        ]) ?>
+        <?= $this->Form->control('password', [
+            'required' => true,
+            'label' => 'Contraseña',
+        ]) ?>
+        <?= $this->Form->submit('Entrar', ['class' => 'btn-admin']) ?>
     <?= $this->Form->end() ?>
-
-    <?= $this->Html->link("Add User", ['action' => 'add']) ?>
 </div>

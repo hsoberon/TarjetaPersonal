@@ -12,8 +12,9 @@
             // 'https://quickchart.io/qr?text=https%3A%2F%2Ftarjetapersonal.co%2Fhernan-soberon&ecLevel=H&margin=2&size=300&format=svg',
             ['class' => 'img-fluid', 'alt' => 'QR code']); ?>
     </div>
-    <h1><?= $card->name; ?></h1>
-    <?php if($card->description): ?><p class="description"><?= $card->description; ?></p><?php endif; ?>
+    <h1><?= h($card->name); ?></h1>
+    <?php if ($card->position): ?><p class="position"><?= h($card->position); ?></p><?php endif; ?>
+    <?php if ($card->description): ?><p class="description"><?= h($card->description); ?></p><?php endif; ?>
 
     <!-- LINKS -->
     <?= $this->element('card_links', ['links' => $card->card_links]); ?> 

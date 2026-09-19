@@ -55,13 +55,13 @@
 
     <style type="text/css">
         :root {
-          --body_bg: #1f253d;
-          --body_grad: linear-gradient(121deg,rgba(5, 171, 224, 1),rgba(218, 123, 255, 1));
-          --card-color: rgba(0, 0, 0, 0.28);
-          --card-p: #6bf8ff;
-          --card-h1: white;
-          --card-a: white;
-          --card-a-hover: #6bf8ff;
+          --body_bg: <?= isset($card) ? h($card->styleValue('style_bg')) : '#1f253d' ?>;
+          --body_grad: <?= isset($card) ? h($card->backgroundGradient()) : 'linear-gradient(121deg, #05abe0, #da7bff)' ?>;
+          --card-color: <?= isset($card) ? h($card->cardBackground()) : 'rgba(0, 0, 0, 0.28)' ?>;
+          --card-p: <?= isset($card) ? h($card->styleValue('style_text')) : '#6bf8ff' ?>;
+          --card-h1: <?= isset($card) ? h($card->styleValue('style_heading')) : '#ffffff' ?>;
+          --card-a: <?= isset($card) ? h($card->styleValue('style_link')) : '#ffffff' ?>;
+          --card-a-hover: <?= isset($card) ? h($card->styleValue('style_link_hover')) : '#6bf8ff' ?>;
         }
     </style>
     

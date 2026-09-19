@@ -66,11 +66,12 @@ class CardLinksTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->notEmptyString('active');
-            
+            ->boolean('active')
+            ->allowEmptyString('active');
+
         $validator
             ->integer('card_id')
-            ->notEmptyString('card_id');
+            ->allowEmptyString('card_id');
 
         $validator
             ->integer('type_id')

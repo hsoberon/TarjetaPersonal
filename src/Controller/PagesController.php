@@ -46,7 +46,7 @@ class PagesController extends AppController
      */
     public function home()
     {
-        
+        $this->fetchTable('Visits')->record($this->request, 'home');
     }
 
 
@@ -71,8 +71,18 @@ class PagesController extends AppController
                             'LinkTypes',
                         ]
                     ])
-                    ->firstOrFail();
+                    ->first();
         $this->viewBuilder()->setTheme('Modern');
+
+        if (!$card) {
+            $contactCard = $cards->findByUrlAndActive('hernan-soberon', true)->first();
+            $this->set(compact('url', 'contactCard'));
+            $this->response = $this->response->withStatus(404);
+
+            return $this->render('missing');
+        }
+
+        $this->fetchTable('Visits')->record($this->request, 'card', (int)$card->id);
 
         $this->set(compact('url', 'card'));
     }

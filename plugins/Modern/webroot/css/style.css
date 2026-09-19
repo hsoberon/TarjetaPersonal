@@ -39,6 +39,13 @@ body::before {
     font-size: 2em;
 }
 
+.card p.position {
+    color: var(--card-p);
+    font-size: 1em;
+    opacity: 0.85;
+    margin-top: -0.4em;
+}
+
 .card p {
     color: var(--card-p);
     font-size: 1.2em;
@@ -99,6 +106,39 @@ body::before {
 .links > div {
     margin: 0 auto 20px auto;
     padding: 0 10px;
+}
+
+.missing-illustration {
+    max-width: 100%;
+    margin: 0 auto 1.2rem;
+}
+
+.missing-illustration img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+}
+
+.missing-card .profile {
+    margin-top: 1.5rem;
+}
+
+.missing-card .contact-name {
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+.missing-card-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 10px 18px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+.missing-card-link:hover {
+    color: var(--card-a-hover);
 }
 
 

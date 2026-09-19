@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -53,4 +54,18 @@ class User extends Entity
     protected array $_hidden = [
         'password',
     ];
+
+    protected function _setPassword(?string $password): ?string
+    {
+        if ($password === null || $password === '') {
+            return $this->getOriginal('password');
+        }
+
+        return (new DefaultPasswordHasher())->hash($password);
+    }
+
+    protected function _getIsAdmin(): bool
+    {
+        return (int)$this->role_id === 1;
+    }
 }

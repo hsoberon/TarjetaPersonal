@@ -51,4 +51,15 @@ class AppController extends Controller
 
         $this->loadComponent('Authentication.Authentication');
     }
+
+    public function beforeRender(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeRender($event);
+
+        if ($this->components()->has('Authentication')) {
+            $this->set('identity', $this->request->getAttribute('identity'));
+        } else {
+            $this->set('identity', null);
+        }
+    }
 }

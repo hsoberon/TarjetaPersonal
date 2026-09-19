@@ -58,6 +58,15 @@ class CardsTable extends Table
         ]);
         $this->hasMany('CardLinks', [
             'foreignKey' => 'card_id',
+            'sort' => [
+                'CardLinks.priority' => 'ASC',
+                'CardLinks.id' => 'ASC',
+            ],
+            'dependent' => true,
+        ]);
+        $this->hasMany('Visits', [
+            'foreignKey' => 'card_id',
+            'dependent' => false,
         ]);
     }
 
@@ -70,7 +79,8 @@ class CardsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->notEmptyString('active');
+            ->boolean('active')
+            ->allowEmptyString('active');
 
         $validator
             ->scalar('name')
@@ -87,7 +97,32 @@ class CardsTable extends Table
             ->scalar('url')
             ->maxLength('url', 250)
             ->requirePresence('url', 'create')
-            ->notEmptyString('url');
+            ->notEmptyString('url')
+            ->add('url', 'slug', [
+                'rule' => ['custom', '/^[a-z0-9]+(?:-[a-z0-9]+)*$/'],
+                'message' => 'Usa solo minúsculas, números y guiones.',
+            ])
+            ->add('url', 'reserved', [
+                'rule' => function ($value) {
+                    $reserved = [
+                        'admin', 'clients', 'cards', 'users', 'pages',
+                        'login', 'logout', 'css', 'js', 'img', 'font',
+                    ];
+
+                    return !in_array(strtolower((string)$value), $reserved, true);
+                },
+                'message' => 'Esta URL está reservada.',
+            ]);
+
+        foreach ([
+            'style_bg', 'style_grad_from', 'style_grad_to', 'style_card',
+            'style_heading', 'style_text', 'style_link', 'style_link_hover',
+        ] as $styleField) {
+            $validator
+                ->scalar($styleField)
+                ->maxLength($styleField, 50)
+                ->allowEmptyString($styleField);
+        }
 
         $validator
             ->scalar('description')
@@ -119,6 +154,7 @@ class CardsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add($rules->isUnique(['url']), ['errorField' => 'url']);
         $rules->add($rules->existsIn(['theme_id'], 'Themes'), ['errorField' => 'theme_id']);
         $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
 

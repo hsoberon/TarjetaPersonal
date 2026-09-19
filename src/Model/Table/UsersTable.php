@@ -57,6 +57,16 @@ class UsersTable extends Table
     }
 
     /**
+     * Finder used by the authentication identifier.
+     */
+    public function findAuth(SelectQuery $query): SelectQuery
+    {
+        return $query
+            ->contain(['Roles'])
+            ->where(['Users.active' => 1]);
+    }
+
+    /**
      * Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
