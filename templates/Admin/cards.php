@@ -38,10 +38,9 @@ $this->assign('title', 'Tarjetas');
                 <tr>
                     <td>
                         <?php if ($card->image): ?>
-                            <?= $this->Html->image($card->image, [
+                            <?= $this->Html->image('Modern.' . $card->image, [
                                 'class' => 'thumb',
                                 'alt' => $card->name,
-                                'plugin' => 'Modern',
                             ]) ?>
                         <?php endif; ?>
                     </td>

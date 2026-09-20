@@ -71,9 +71,8 @@ $this->Form->unlockField('card_links');
         <label>Imagen actual</label>
         <?php if ($card->image): ?>
             <div class="mb-3">
-                <?= $this->Html->image($card->image, [
+                <?= $this->Html->image('Modern.' . $card->image, [
                     'alt' => $card->name,
-                    'plugin' => 'Modern',
                     'style' => 'width:96px;height:96px;object-fit:cover;border-radius:50%;',
                 ]) ?>
                 <p class="text-muted"><?= h($card->image) ?></p>
@@ -185,7 +184,7 @@ $this->Form->unlockField('card_links');
                 <label>Vista previa</label>
                 <div class="preview-card" id="style-preview">
                     <?php if ($card->image): ?>
-                        <?= $this->Html->image($card->image, ['plugin' => 'Modern', 'alt' => $card->name]) ?>
+                        <?= $this->Html->image('Modern.' . $card->image, ['alt' => $card->name]) ?>
                     <?php endif; ?>
                     <h3 id="preview-name"><?= h($card->name) ?></h3>
                     <p id="preview-text"><?= h($card->description ?: 'Texto de ejemplo') ?></p>
