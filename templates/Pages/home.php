@@ -321,18 +321,86 @@
 <div class="section light-bg" id="gallery">
     <div class="container">
         <div class="section-title">
-            <small>GALLERY</small>
-            <h3>App Screenshots</h3>
+            <small>GALERÍA</small>
+            <h3>Ejemplos de tarjetas</h3>
         </div>
 
         <div class="img-gallery owl-carousel owl-theme">
-            <?php 
-                echo $this->Html->image('screen1.jpg', ['alt' => 'image']);
-                echo $this->Html->image('screen2.jpg', ['alt' => 'image']);
-                echo $this->Html->image('screen3.jpg', ['alt' => 'image']);
-                echo $this->Html->image('screen1.jpg', ['alt' => 'image']);
-
-             ?>
+            <?php
+            $examples = [
+                [
+                    'name' => 'Ana López',
+                    'role' => 'Diseñadora gráfica',
+                    'text' => 'Identidad visual y marcas',
+                    'initials' => 'AL',
+                    'from' => '#05abe0',
+                    'to' => '#da7bff',
+                    'links' => [
+                        ['icon' => 'ti-mobile', 'label' => 'Llamar'],
+                        ['icon' => 'ti-email', 'label' => 'Correo'],
+                        ['icon' => 'ti-comment', 'label' => 'WhatsApp'],
+                    ],
+                ],
+                [
+                    'name' => 'Mateo Ruiz',
+                    'role' => 'Arquitecto',
+                    'text' => 'Espacios para habitar',
+                    'initials' => 'MR',
+                    'from' => '#f6d365',
+                    'to' => '#fda085',
+                    'links' => [
+                        ['icon' => 'ti-mobile', 'label' => 'Llamar'],
+                        ['icon' => 'ti-email', 'label' => 'Correo'],
+                        ['icon' => 'ti-location-pin', 'label' => 'Ubicación'],
+                    ],
+                ],
+                [
+                    'name' => 'Lucía Fernández',
+                    'role' => 'Fotógrafa',
+                    'text' => 'Retratos y eventos',
+                    'initials' => 'LF',
+                    'from' => '#667eea',
+                    'to' => '#764ba2',
+                    'links' => [
+                        ['icon' => 'ti-comment', 'label' => 'WhatsApp'],
+                        ['icon' => 'ti-instagram', 'label' => 'Instagram'],
+                        ['icon' => 'ti-email', 'label' => 'Correo'],
+                    ],
+                ],
+                [
+                    'name' => 'Andrés Vega',
+                    'role' => 'Chef',
+                    'text' => 'Cocina de autor',
+                    'initials' => 'AV',
+                    'from' => '#11998e',
+                    'to' => '#38ef7d',
+                    'links' => [
+                        ['icon' => 'ti-mobile', 'label' => 'Llamar'],
+                        ['icon' => 'ti-comment', 'label' => 'WhatsApp'],
+                        ['icon' => 'ti-location-pin', 'label' => 'Ubicación'],
+                    ],
+                ],
+            ];
+            foreach ($examples as $example):
+            ?>
+            <article class="sample-card" style="background: linear-gradient(121deg, <?= h($example['from']) ?>, <?= h($example['to']) ?>);">
+                <div class="sample-inner">
+                    <div class="sample-avatar" aria-hidden="true"><?= h($example['initials']) ?></div>
+                    <div class="sample-qr" aria-hidden="true"></div>
+                    <h4><?= h($example['name']) ?></h4>
+                    <p class="sample-role"><?= h($example['role']) ?></p>
+                    <p class="sample-text"><?= h($example['text']) ?></p>
+                    <div class="sample-links">
+                        <?php foreach ($example['links'] as $link): ?>
+                            <div>
+                                <span class="<?= h($link['icon']) ?>"></span>
+                                <?= h($link['label']) ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </article>
+            <?php endforeach; ?>
         </div>
 
     </div>
@@ -458,8 +526,8 @@
         <div class="call-to-action">
 
             <div class="box-icon"><span class="ti-mobile gradient-fill ti-3x"></span></div>
-            <h2>Download Anywhere</h2>
-            <p class="tagline">Available for all major mobile and desktop platforms. Rapidiously visualize optimal ROI rather than enterprise-wide methods of empowerment. </p>
+            <h2>Disponible cuando la necesites</h2>
+            <p class="tagline">Añádela a tu pantalla de inicio muy fácilmente para tener tu tarjeta siempre a la mano.</p>
             <div class="my-4">
 
                 <a href="#" class="btn btn-light">
@@ -469,7 +537,7 @@
                     <?= $this->Html->image('playicon.png', ['alt' => 'icon']); ?>
                      Google play</a>
             </div>
-            <p class="text-primary"><small><i>*Works on iOS 10.0.5+, Android Kitkat and above. </i></small></p>
+            <p class="text-primary"><small><i>Funciona en iOS y en Android.</i></small></p>
         </div>
     </div>
 
@@ -479,25 +547,28 @@
 <div class="light-bg py-5" id="contact">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 text-center text-lg-left">
-                    <p class="mb-2"> <span class="ti-location-pin mr-2"></span> 1485 Pacific St, Brooklyn, NY 11216 USA</p>
-                    <div class=" d-block d-sm-inline-block">
+                <div class="col-lg-6 text-center text-lg-left flex flex-column">
+                    <p class="mb-2"> <span class="ti-location-pin mr-2"></span> Medellín, Colombia</p>
+                    <div class=" d-block">
                         <p class="mb-2">
-                            <span class="ti-email mr-2"></span> <a class="mr-4" href="mailto:support@mobileapp.com">support@mobileapp.com</a>
+                            <span class="ti-email mr-2"></span> <a class="mr-4" href="mailto:info@hsoberon.com">info@hsoberon.com</a>
                         </p>
                     </div>
-                    <div class="d-block d-sm-inline-block">
+                    <div class="d-block">
                         <p class="mb-0">
-                            <span class="ti-headphone-alt mr-2"></span> <a href="tel:51836362800">518-3636-2800</a>
+                            <span class="ti-comment-alt mr-2"></span>
+                             <a href="https://wa.me/+573015834971" target="_blank" rel="noopener">WhatsApp: +573015834971</a>
                         </p>
                     </div>
 
                 </div>
                 <div class="col-lg-6">
                     <div class="social-icons">
-                        <a href="#"><span class="ti-facebook"></span></a>
-                        <a href="#"><span class="ti-twitter-alt"></span></a>
-                        <a href="#"><span class="ti-instagram"></span></a>
+                        <a href="https://wa.me/+573015834971" target="_blank" rel="noopener" aria-label="WhatsApp">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" focusable="false">
+                                <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
