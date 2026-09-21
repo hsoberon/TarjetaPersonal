@@ -39,10 +39,13 @@
                 break;
 
             case 4:
-                // VCARD
-                $vcard = $this->Url->assetUrl('contacts/'.$link->content);
+                // Generar contacto — vCard built from the card and the other links
+                $slug = rawurlencode((string)($cardUrl ?? ''));
+                $vcard = $slug !== ''
+                    ? $this->Url->build('/' . $slug . '/contacto.vcf')
+                    : $this->Url->assetUrl('contacts/' . $link->content);
                 echo "<div class=''>
-                    <a  class='contact-link' href='{$vcard}'>
+                    <a  class='contact-link' href='" . h($vcard) . "'>
                         {$link->link_type->icon}<br>
                         {$link->title} 
                     </a>    

@@ -83,7 +83,8 @@ $this->Form->unlockField('card_links');
     </div>
 
     <div class="tab-pane fade" id="tab-links">
-        <p class="text-muted">Teléfono, email y WhatsApp usan el campo contenido. Redes y web usan la URL.</p>
+        <p class="text-muted">Teléfono, email y WhatsApp usan el campo contenido. Redes y web usan la URL. Generar contacto crea el archivo .vcf con el nombre, el cargo, la foto y los demás enlaces.</p>
+        <button type="button" class="btn-admin btn-alt mb-3" id="add-link">Agregar enlace</button>
         <div id="links-wrap">
             <?php foreach ($links as $i => $link): ?>
                 <div class="link-row">
@@ -124,7 +125,6 @@ $this->Form->unlockField('card_links');
                 </div>
             <?php endforeach; ?>
         </div>
-        <button type="button" class="btn-admin btn-alt" id="add-link">Agregar enlace</button>
         <template id="link-template">
             <div class="link-row">
                 <div class="row">

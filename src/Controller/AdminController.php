@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\Card;
+use App\Service\VCardBuilder;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\I18n\DateTime;
 use Cake\Utility\Text;
@@ -154,6 +155,7 @@ class AdminController extends AppController
             }
 
             if ($this->Cards->save($card)) {
+                $this->writeContactFile($card);
                 $this->Flash->success('La tarjeta se creó correctamente.');
 
                 return $this->redirect(['action' => 'editCard', $card->id]);
@@ -183,6 +185,7 @@ class AdminController extends AppController
             }
 
             if ($this->Cards->save($card, ['associated' => ['CardLinks']])) {
+                $this->writeContactFile($card);
                 $this->Flash->success('La tarjeta se actualizó correctamente.');
 
                 return $this->redirect(['action' => 'editCard', $card->id]);
@@ -191,7 +194,10 @@ class AdminController extends AppController
         }
 
         $this->setCardFormLists();
-        $linkTypes = $this->fetchTable('LinkTypes')->find('list')->orderBy(['title' => 'ASC'])->all();
+        $linkTypes = $this->fetchTable('LinkTypes')->find('list')->orderBy(['title' => 'ASC'])->all()->toArray();
+        if (isset($linkTypes[VCardBuilder::TYPE_CONTACT])) {
+            $linkTypes[VCardBuilder::TYPE_CONTACT] = 'Generar contacto';
+        }
         $this->set(compact('card', 'linkTypes'));
     }
 
@@ -286,6 +292,17 @@ class AdminController extends AppController
 
         if (!empty($data['card_links']) && is_array($data['card_links'])) {
             foreach ($data['card_links'] as $index => $link) {
+                if ((int)($link['type_id'] ?? 0) === VCardBuilder::TYPE_CONTACT) {
+                    if (trim((string)($link['title'] ?? '')) === '') {
+                        $link['title'] = 'Generar contacto';
+                        $data['card_links'][$index]['title'] = 'Generar contacto';
+                    }
+                    $slug = (string)($data['url'] ?? '');
+                    if ($slug !== '') {
+                        $link['content'] = $slug . '.vcf';
+                        $data['card_links'][$index]['content'] = $slug . '.vcf';
+                    }
+                }
                 if ($this->isBlankLink($link)) {
                     unset($data['card_links'][$index]);
                     continue;
@@ -359,6 +376,15 @@ class AdminController extends AppController
         }
 
         return $name;
+    }
+
+    private function writeContactFile(Card $card): void
+    {
+        if (empty($card->card_links)) {
+            $card = $this->Cards->get($card->id, contain: ['CardLinks']);
+        }
+
+        (new VCardBuilder())->store($card);
     }
 
     private function unlockCardForm(): void

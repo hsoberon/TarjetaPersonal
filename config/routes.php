@@ -77,6 +77,10 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/login', ['controller' => 'Users', 'action' => 'login']);
         $builder->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
+        $builder->connect('/{url}/contacto.vcf', ['controller' => 'Pages', 'action' => 'vcard'])
+            ->setPass(['url'])
+            ->setPatterns(['url' => '[a-z0-9-]+']);
+
         $builder->connect('/{url}', ['controller' => 'Pages', 'action' => 'card'])
             ->setPass(['url']);
 

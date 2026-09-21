@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Service\VCardBuilder;
 use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
@@ -37,7 +38,7 @@ class PagesController extends AppController
     {
         parent::beforeFilter($event);
         
-        $this->Authentication->addUnauthenticatedActions(['home', 'card']);
+        $this->Authentication->addUnauthenticatedActions(['home', 'card', 'vcard']);
     }
 
 
@@ -85,6 +86,40 @@ class PagesController extends AppController
         $this->fetchTable('Visits')->record($this->request, 'card', (int)$card->id);
 
         $this->set(compact('url', 'card'));
+    }
+
+    /**
+     * Download a vCard built from the card and its other links.
+     */
+    public function vcard($url = null): Response
+    {
+        $cards = $this->fetchTable('Cards');
+        $card = $cards->findByUrlAndActive($url, true)
+            ->contain([
+                'CardLinks' => [
+                    'conditions' => ['active' => 1],
+                    'sort' => [
+                        'ISNULL(priority)',
+                        'priority',
+                    ],
+                ],
+            ])
+            ->first();
+
+        $builder = new VCardBuilder();
+        if (!$card || !$builder->hasContactLink($card)) {
+            throw new NotFoundException('Esta tarjeta no tiene un contacto para descargar.');
+        }
+
+        $body = $builder->build($card);
+        $builder->store($card);
+        $filename = $builder->filename($card);
+
+        return $this->response
+            ->withType('text/vcard')
+            ->withCharset('UTF-8')
+            ->withHeader('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->withStringBody($body);
     }
 
 

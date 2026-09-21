@@ -17,5 +17,5 @@
     <?php if ($card->description): ?><p class="description"><?= h($card->description); ?></p><?php endif; ?>
 
     <!-- LINKS -->
-    <?= $this->element('card_links', ['links' => $card->card_links]); ?> 
+    <?= $this->element('card_links', ['links' => $card->card_links, 'cardUrl' => $card->url]); ?> 
 </div>
