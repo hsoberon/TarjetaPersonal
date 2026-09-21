@@ -7,7 +7,11 @@
 /vendor/*
 /webroot/contacts/*
 /plugins/Modern/webroot/img/*
-
+.htaccess_hostgator
+.user.ini
+php.ini
+webroot/error_log
+webroot/img/*
 
 # OS generated files #
 ######################
